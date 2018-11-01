@@ -1,0 +1,3 @@
+module org.kde.lottie
+
+LottieAnimation 1.0 LottieAnimation.qml
