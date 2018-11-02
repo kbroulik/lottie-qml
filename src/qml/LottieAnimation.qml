@@ -260,6 +260,11 @@ Item {
                 return;
             }
 
+            var data = animationData;
+            if (!data) {
+                return;
+            }
+
             var lottie = Lottie.initialize(canvas);
 
             var aspectRatio = "none";
@@ -293,7 +298,7 @@ Item {
                 },
                 loop: loop,
                 autoplay: lottieItem.running,
-                animationData: animationData
+                animationData: data
             });
 
             animationItem.setSpeed(lottieItem.speed);
