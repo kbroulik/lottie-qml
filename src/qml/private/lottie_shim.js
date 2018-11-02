@@ -95,7 +95,10 @@ function initialize(canvas) {
         // https://codereview.qt-project.org/#/c/244301/
         // Lottie can fall back to use setTimeout instead but this causes repaint issues and CPU stress.
         requestAnimationFrame: function (cb) {
-            return canvas.requestAnimationFrame(cb);
+            return canvas.requestAnimationFrame(function (timestamp) {
+                // Creating our own timestamp here to workaround the aforementioned Qt bug
+                cb(new Date().getTime());
+            });
         },
         cancelAnimationFrame: function (id) {
             canvas.cancelAnimationFrame(id);
