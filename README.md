@@ -50,7 +50,9 @@ make install
 
 ## Known issues
 
-* [QTBUG-68278](https://bugreports.qt.io/browse/QTBUG-68278): `requestAnimationFrame` passes seconds to its callback causing the animations to not advance properly. You can remove `requestAnimationFrame` from the `lottie_shim.js` and it will fall back to using `setTimeout`, however, this will cause repainting issues and CPU stress.
+* [QTBUG-68278](https://bugreports.qt.io/browse/QTBUG-68278): `requestAnimationFrame` passes seconds to its callback
+causing the animations to not advance properly. There is currently a workaround in place that uses the current time
+to advance the animations.
 * [QTBUG-71524](https://bugreports.qt.io/browse/QTBUG-71524): You cannot use the non-minified `lottie.js` as Qt chokes on reserved keywords used as function names and arguments inside.
 
 ## License
