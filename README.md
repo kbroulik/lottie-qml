@@ -1,6 +1,6 @@
 # Lottie QML
 
-This provides a QML `Item` to render Adobe® Afer Effects™ animations exported as JSON with Bodymovin using the Lottie Web library.
+This provides a QML `Item` to render Adobe® After Effects™ animations exported as JSON with Bodymovin using the Lottie Web library.
 
 See http://airbnb.io/lottie/
 
