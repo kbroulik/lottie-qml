@@ -414,13 +414,17 @@ Item {
         xhr.open("GET", url, false /*synchronous*/);
         xhr.send(null /*payload*/);
 
-        if (xhr.status !== 200) {
+        // NOTE KIO AccessManager in contrast to QNetworkAccessManager doesn't set a HTTP status code
+        // when loading local files via Ajax so we can't check xhr.status === 200 here
+
+        var text = xhr.responseText;
+        if (text.length < 10) {
             errorString = xhr.statusText || xhr.status || "Failed to load " + url;
             status = Image.Error;
             return;
         }
 
-        d.setAnimationDataJson(xhr.responseText);
+        d.setAnimationDataJson(text);
     }
 
     Item {
