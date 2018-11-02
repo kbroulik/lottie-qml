@@ -21,6 +21,15 @@ LottieAnimation {
 }
 ```
 
+There is a testing application provided in this repository:
+
+```
+qmlscene tester.qml
+```
+
+Just drag a Lottie JSON animation file into it and tweak the settings provided in the toolbar.
+You can also add multiple files and switch between them using the ComboBox in the top left or Ctrl+(Shift)+Tab shortcuts.
+
 ### Property documentation
 
 * `source` can be an absolute URL to an animation JSON file (including `qrc:/`), a JSON data string, or a JavaScript object.
