@@ -400,6 +400,9 @@ Item {
         }
 
         d.animationData = null;
+        if (!source) {
+            return;
+        }
 
         var url = source.toString(); // toString in case is QUrl
         if (url.indexOf("/") === 0) { // assume local file
