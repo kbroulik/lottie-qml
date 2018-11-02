@@ -70,13 +70,16 @@ Window {
         property var files
     }
 
-    ColumnLayout {
-        anchors.fill: parent
+    ToolBar {
+        id: toolBar
+        width: parent.width
+        height: toolFlow.height
+        z: 2
 
         Flow {
-            Layout.fillWidth: true
+            id: toolFlow
+            width: parent.width
             spacing: 5
-            z: 2
 
             ComboBox {
                 id: sourceCombo
@@ -185,74 +188,79 @@ Window {
             }
         }
 
+    }
+
+    Rectangle {
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: toolBar.bottom
+            bottom: parent.bottom
+        }
+        color: colorCombo.currentText
+
+        Label {
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.Wrap
+            text: {
+                if (lottieAnim.status === Image.Error) {
+                    return (lottieAnim.errorString || "Error");
+                } else if (sourceCombo.count === 0) {
+                    return "Drop a Lottie JSON animation file here to preview it."
+                } else {
+                    return ""
+                }
+            }
+            visible: text !== ""
+        }
+
+        Lottie.LottieAnimation {
+            id: lottieAnim
+            anchors.centerIn: parent
+            width: fullCheck.checked ? parent.width : implicitWidth
+            height: fullCheck.checked ? parent.height : implicitHeight
+            source: (sourceCombo.model[sourceCombo.currentIndex] || {}).value || ""
+            running: true
+            clearBeforeRendering: clearCheck.checked
+            speed: speedSlider.value
+            loops: loopCheck.checked ? Animation.Infinite : 0
+            fillMode: fillModeCombo.model[fillModeCombo.currentIndex].value
+            reverse: reverseCheck.checked
+        }
+
         Rectangle {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            color: colorCombo.currentText
+            anchors.fill: lottieAnim
+            border {
+                width: 1
+                color: "#000"
+            }
+            color: "#33ff00ff"
+            visible: debugCheck.checked
+        }
 
-            Label {
-                anchors.fill: parent
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                wrapMode: Text.Wrap
-                text: {
-                    if (lottieAnim.status === Image.Error) {
-                        return (lottieAnim.errorString || "Error");
-                    } else if (sourceCombo.count === 0) {
-                        return "Drop a Lottie JSON animation file here to preview it."
-                    } else {
-                        return ""
-                    }
+        DropArea {
+            anchors.fill: parent
+            onEntered: {
+                if (!drag.hasUrls) {
+                    drag.accepted = false;
                 }
-                visible: text !== ""
             }
 
-            Lottie.LottieAnimation {
-                id: lottieAnim
-                anchors.centerIn: parent
-                width: fullCheck.checked ? parent.width : implicitWidth
-                height: fullCheck.checked ? parent.height : implicitHeight
-                source: (sourceCombo.model[sourceCombo.currentIndex] || {}).value || ""
-                running: true
-                clearBeforeRendering: clearCheck.checked
-                speed: speedSlider.value
-                loops: loopCheck.checked ? Animation.Infinite : 0
-                fillMode: fillModeCombo.model[fillModeCombo.currentIndex].value
-                reverse: reverseCheck.checked
-            }
-
-            Rectangle {
-                anchors.fill: lottieAnim
-                border {
-                    width: 1
-                    color: "#000"
-                }
-                color: "#33ff00ff"
-                visible: debugCheck.checked
-            }
-
-            DropArea {
-                anchors.fill: parent
-                onEntered: {
-                    if (!drag.hasUrls) {
-                        drag.accepted = false;
-                    }
+            onDropped: {
+                if (!drop.hasUrls) {
+                    return;
                 }
 
-                onDropped: {
-                    if (!drop.hasUrls) {
-                        return;
-                    }
+                var newModel = sourceCombo.model;
 
-                    var newModel = sourceCombo.model;
+                drop.urls.forEach(function (url) {
+                    newModel.push(sourceCombo.itemFromUrl(url));
+                });
 
-                    drop.urls.forEach(function (url) {
-                        newModel.push(sourceCombo.itemFromUrl(url));
-                    });
-
-                    sourceCombo.model = newModel;
-                    sourceCombo.currentIndex = sourceCombo.count - 1;
-                }
+                sourceCombo.model = newModel;
+                sourceCombo.currentIndex = sourceCombo.count - 1;
             }
         }
     }
