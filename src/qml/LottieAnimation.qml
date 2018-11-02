@@ -202,20 +202,23 @@ Item {
         onAnimationDataChanged: {
             destroyAnimation();
 
-            if (!animationData) {
+            // Avoid repeated access to this property containing lots of data
+            var data = animationData;
+
+            if (!data) {
                 errorString = "";
                 status = Image.Null;
                 return;
             }
 
-            if (typeof animationData !== "object") {
+            if (typeof data !== "object") {
                 errorString = "animationData is not an object, this should not happen";
                 status = Image.Error;
                 return;
             }
 
-            var width = animationData.w || 0;
-            var height = animationData.h || 0;
+            var width = data.w || 0;
+            var height = data.h || 0;
 
             if (width <= 0 || height <= 0) {
                 errorString = "Animation data does not contain valid size information";
