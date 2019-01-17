@@ -430,6 +430,11 @@ Item {
         d.setAnimationDataJson(text);
     }
 
+    // When re-parenting the item, re-initialize the animation
+    // as the drawing context might become invalidated and since it's
+    // stored in a variable by Lottie, we would crash somewhere in Qt.
+    onParentChanged: Qt.callLater(d.destroyAndRecreate);
+
     Item {
         id: container
         anchors.fill: parent
