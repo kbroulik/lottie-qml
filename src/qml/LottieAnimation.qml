@@ -179,7 +179,10 @@ Item {
             return;
         }
 
-        canvas.getContext("2d").reset();
+        var ctx = canvas.getContext("2d");
+        if (ctx) {
+            ctx.reset();
+        }
         canvas.requestPaint();
     }
 
