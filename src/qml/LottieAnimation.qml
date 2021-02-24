@@ -339,6 +339,7 @@ Item {
         }
 
         function destroyAndRecreate() {
+            console.log(d.log, "destroy and recreate");
             if (animationItem) {
                 d.pendingRawFrame = animationItem.currentRawFrame;
             }
@@ -398,6 +399,7 @@ Item {
     onSourceChanged: {
         // is already JS object, use verbatim
         if (typeof source === "object") { // TODO what about QUrl, I think it is treated as {} here
+            console.log(d.log, "Using source verbatim as it is an object");
             d.animationData = source;
             return;
         }
@@ -405,6 +407,7 @@ Item {
         var sourceString = source.toString();
 
         if (sourceString.indexOf("{") === 0) { // startsWith("{"), assume JSON
+            console.log(d.log, "Using source as JSON");
             d.setAnimationDataJson(sourceString);
             return;
         }
@@ -421,6 +424,8 @@ Item {
             // FIXME figure out how to do relative URLs with Ajax
             // Qt.resolvedUrl is relative to *this* file, not the one where the item is actually used from
         }
+
+        console.log(d.log, "Fetching source from", url);
 
         var xhr = new XMLHttpRequest()
         // FIXME allow asynchronous

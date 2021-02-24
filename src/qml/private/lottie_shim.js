@@ -154,7 +154,7 @@ function initialize(canvas) {
         throw new Error("Failed to load lottie.min.js");
     }
 
-    console.log(d.log, "Using " + url);
+    console.log(d.log, "Using", url);
 
     return window.lottie;
 }
