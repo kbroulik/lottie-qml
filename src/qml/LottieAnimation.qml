@@ -202,6 +202,12 @@ Item {
         // to provide a seamless experience
         property real pendingRawFrame: -1
 
+        readonly property LoggingCategory log: LoggingCategory {
+            name: "org.kde.lottie"
+            // TODO needs bump to Qt 5.12, is it worth it?
+            //defaultLogLevel: LoggingCategory.Info
+        }
+
         onAnimationDataChanged: {
             destroyAnimation();
 
@@ -268,7 +274,8 @@ Item {
                 return;
             }
 
-            var lottie = Lottie.initialize(canvas);
+            console.log(d.log, "Initializing Lottie Animation");
+            var lottie = Lottie.initialize(canvas, d.log);
 
             var aspectRatio = "none";
 
