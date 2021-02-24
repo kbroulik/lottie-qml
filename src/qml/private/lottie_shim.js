@@ -135,17 +135,26 @@ function initialize(canvas) {
         }
     };
 
-    var lottieJs = Qt.include("../3rdparty/lottie.min.js");
-    // NOTE the light player only supports SVG rendering, no Canvas rendering
-    //var lottieJs = Qt.include("../3rdparty/lottie_light.min.js");
+    // First check whether there is a non-minified version for debugging purposes
+    var url = "../3rdparty/lottie.js";
+    var lottieJs = Qt.include(url);
+    // Don't check exception here as we don't want to fall back to minified
+    // if you did a typo while developing.
+    if (lottieJs.status === 2) {
+        url = "../3rdparty/lottie.min.js";
+        lottieJs = Qt.include(url);
+    }
 
     // FIXME Qt docs mention "result.EXCEPTION" as "3" but how to use that enum value here?
     if (lottieJs.status === 3) {
         // forward thrown exception to caller
         throw lottieJs.exception;
     } else if (lottieJs.status === 2) { // result.NETWORK_ERROR
-        throw new Error("Failed to load lottie.js");
+        console.warn("Failed to load", url, lottieJs.statusText);
+        throw new Error("Failed to load lottie.min.js");
     }
+
+    console.log(d.log, "Using " + url);
 
     return window.lottie;
 }
