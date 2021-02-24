@@ -288,7 +288,7 @@ Item {
                 aspectRatio = "xMidYMid slice";
                 break;
             case Image.PreserveAspectFit:
-                aspectRatio = "xMidYMidmeet";
+                aspectRatio = "xMidYMid meet";
                 break;
             }
 
