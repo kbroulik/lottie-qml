@@ -454,6 +454,7 @@ Item {
         property real offsetHeight: height
         property var style: ({})
         property string innerHTML
+        property string innerText
         property var itemData: []
         function appendChild(item) {
             item.parent = this;
