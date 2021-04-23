@@ -425,7 +425,10 @@ Item {
             // Qt.resolvedUrl is relative to *this* file, not the one where the item is actually used from
         }
 
-        console.log(d.log, "Fetching source from", url);
+        // NOTE QML LoggingCategory {} has its internal QLoggingCategory created in
+        // componentCompleted(). There seems to be a situation where this console.log
+        // is executed before the LoggingCategory {} object above has completed.
+        //console.log(d.log, "Fetching source from", url);
 
         var xhr = new XMLHttpRequest()
         // FIXME allow asynchronous
