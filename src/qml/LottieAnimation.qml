@@ -425,7 +425,6 @@ Item {
             // Qt.resolvedUrl is relative to *this* file, not the one where the item is actually used from
         }
 
-        console.log(d.log, "Fetching source from", url);
 
         var xhr = new XMLHttpRequest()
         // FIXME allow asynchronous
