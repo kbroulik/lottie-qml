@@ -97,7 +97,7 @@ function initialize(canvas) {
         requestAnimationFrame: function (cb) {
             return canvas.requestAnimationFrame(function (timestamp) {
                 // Creating our own timestamp here to workaround the aforementioned Qt bug
-                cb(new Date().getTime());
+                cb(Date.now());
             });
         },
         cancelAnimationFrame: function (id) {
