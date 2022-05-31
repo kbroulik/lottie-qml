@@ -122,6 +122,11 @@ Item {
     property alias renderTarget: canvas.renderTarget
 
     /**
+     * Allow graphical effects to be applied to the animation
+     */
+    property alias canvasLayer: canvas.layer
+
+    /**
      * Emitted when the last loop of the animation finishes.
      * @note This does not work right now
      */
